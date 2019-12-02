@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "chat",
+    "password": "YtMHw8Z5cDGW16Qa",
+    "database": "chat",
+    "host": "database_development",
+    "port": 10237,
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
