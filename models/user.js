@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   } );
   User.associate = function(models) {
     // associations can be defined here
-    User.hasMany(models.ChatMessage, {foreignKey: "userNo", sourceKey: "userNo"});
+    User.hasMany(models.ChatMember, {foreignKey: "userNo"});
   };
   return User;
 };
