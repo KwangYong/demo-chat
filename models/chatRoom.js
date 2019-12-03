@@ -1,18 +1,18 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ChatRoom = sequelize.define('ChatRoom', {
-    chatRoomNo: {type: DataTypes.BIGINT, primaryKey: true},
+  const chatRoom = sequelize.define('chatRoom', {
+    chatRoomNo: {type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     name: DataTypes.STRING
   }, {
     underscored: true,
     freezeTableName: true,
     tableName: "chat_room"
   });
-  ChatRoom.associate = function(models) {
+  chatRoom.associate = function (models) {
     // associations can be defined here
-    ChatRoom.hasMany(models.ChatMessage, {foreignKey: "roomNo"});
-    ChatRoom.hasMany(models.ChatMember, {foreignKey: "roomNo"});
+    chatRoom.hasMany(models.chatMessage, {foreignKey: "roomNo"});
+    chatRoom.hasMany(models.chatMember, {foreignKey: "roomNo"});
 
   };
-  return ChatRoom;
+  return chatRoom;
 };

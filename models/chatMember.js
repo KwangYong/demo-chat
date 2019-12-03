@@ -1,16 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ChatMember = sequelize.define('ChatMember', {
-    memberNo: {type: DataTypes.BIGINT, primaryKey: true}
+  const chatMember = sequelize.define('chatMember', {
+    memberNo: {type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true}
   }, {
     underscored: true,
     tableName: "chat_member"
   });
-  ChatMember.associate = function(models) {
+  chatMember.associate = function (models) {
     // associations can be defined here
-    ChatMember.belongsTo(models.ChatRoom, {foreignKey: "roomNo"});
-    ChatMember.belongsTo(models.User, {foreignKey: "userNo"});
-    ChatMember.hasMany(models.ChatMessage, {foreignKey: "memberNo"});
+    chatMember.belongsTo(models.chatRoom, {foreignKey: "roomNo"});
+    chatMember.belongsTo(models.user, {foreignKey: "userNo"});
+    chatMember.hasMany(models.chatMessage, {foreignKey: "memberNo"});
   };
-  return ChatMember;
+  return chatMember;
 };

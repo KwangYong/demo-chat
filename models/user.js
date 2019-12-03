@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    userNo: {type: DataTypes.BIGINT, primaryKey:true},
+    const user = sequelize.define('user', {
+        userNo: {type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING
@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
     tableName: "user"
   } );
-  User.associate = function(models) {
+    user.associate = function (models) {
     // associations can be defined here
-    User.hasMany(models.ChatMember, {foreignKey: "userNo"});
+        user.hasMany(models.chatMember, {foreignKey: "userNo"});
   };
-  return User;
+    return user;
 };
