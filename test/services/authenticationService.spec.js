@@ -1,31 +1,38 @@
-const assert = require('assert');
+const assert = require('chai');
+const should = require('chai').should();
 const sinon = require('sinon');
 const userStore = require('../../stores/userStore');
 const authenticationService = require('../../services/authenticationService.js');
+const cryptoService = require('../../services/cryptoService');
 
-it('should be ok', async () => {
-    const password = 'password';
-    const email = 'email';
-    const userNo = 1;
-    sinon.stub(userStore, 'getUserByEmail').returns(Promise.resolve(
-        {userNo: userNo, email: email, password: password}
-    ));
-    const userInfo = await authenticationService.login(email, password);
+describe('Test suite',  () => {
+    it('login', async () => {
+        const password = 'password';
+        const email = 'email';
+        const userNo = 1;
+        sinon.stub(userStore, 'getUserByEmail').returns(Promise.resolve(
+            {userNo: userNo, email: email, password: password}
+        ));
+        sinon.stub( cryptoService, 'verifyHash').returns(true);
+        const userInfo = await authenticationService.login(email, password);
+        should.exist(userInfo);
+    });
 
+    it('login_not_exist_a_user', async () => {
+        const password = 'password';
+        const email = 'email';
+
+        sinon.stub(userStore, 'getUserByEmail').returns(Promise.reject(new Error('no data')));
+
+        authenticationService.login(email, password)
+            .then(
+                () => Promise.reject(),
+                err =>  assert.instanceOf(err, Error)
+            )
+    });
+
+    afterEach(() => {
+        sinon.restore();
+    });
 });
 
-it('should be ok', async () => {
-    const password = 'password';
-    const email = 'email';
-    const userNo = 1;
-
-    const userInfo = await authenticationService.login(email, password);
-
-    assert.equal(email, userInfo.email);
-    assert.equal(password, userInfo.password);
-    assert.equal(userNo, userInfo.userNo);
-});
-
-afterEach(() => {
-    sinon.restore();
-});

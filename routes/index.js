@@ -1,15 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const sequelize = require('../models').sequelize;
-const chatRoomService = require('./../services/chatRoomService');
 
-/* GET home page. */
-router.get('/', async function (req, res, next) {
-  sequelize.transaction( async (_) => {
-    const test = await chatRoomService.joinChatRoom([1, 2]);
-    res.render('index', {title: test});
-  });
+const authenticationService = require('./../services/authenticationService');
 
+router.post('/login', async (req, res, next) => {
+
+  const token = await authenticationService.login(req.body.email, req.body.password);
+  res.json({token: token});
+});
+
+router.post('/join', async (req, res, next) => {
+  try {
+    const token = await authenticationService.join(req.body.email, req.body.password);
+    res.json({token: token});
+  } catch (e) {
+    res.status(409).json({error: e.message});
+  }
 });
 
 module.exports = router;

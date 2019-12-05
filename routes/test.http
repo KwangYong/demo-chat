@@ -1,0 +1,11 @@
+### 회원가입
+POST http://localhost:3000/join
+Content-Type: application/json
+
+{
+  "email": "email",
+  "password": "password"
+}
+
+###
+
