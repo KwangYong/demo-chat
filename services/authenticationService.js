@@ -1,6 +1,6 @@
 'use strict';
 const jwt = require('jsonwebtoken');
-const {go, goS, stopIf} = require("fxjs/Strict");
+const {go, goS} = require("fxjs/Strict");
 const userStore = require('../stores/userStore');
 const cryptoService = require('../services/cryptoService');
 
