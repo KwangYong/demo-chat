@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const authenticationService = require('./../services/authenticationService');
+const authenticationMiddleware = require('../middleware/authenticationMiddleware');
 
 router.post('/login', async (req, res, next) => {
 
@@ -16,6 +17,10 @@ router.post('/join', async (req, res, next) => {
   } catch (e) {
     res.status(409).json({error: e.message});
   }
+});
+
+router.get('/login-check', (req, res, next) => {
+  res.status(200);
 });
 
 module.exports = router;

@@ -8,4 +8,20 @@ Content-Type: application/json
 }
 
 ###
+POST {{apiAddress}}/login
+Content-Type: application/json
+
+{
+  "email": "email",
+  "password": "password"
+}
+
+### token check
+GET {{apiAddress}}/login-check
+Access-Token: {{accessToken}}
+
+### token check - error
+GET {{apiAddress}}/login-check
+
+###
 
