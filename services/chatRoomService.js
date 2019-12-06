@@ -2,7 +2,7 @@
 
 const chatRoomStore = require('../stores/chatRoomStore');
 const chatMemberStore = require('../stores/chatMemberStore');
-const {go, find, every, filter, stopIf, goS} = require("fxjs/Strict");
+const {find, every, filter, stopIf, goS, reduce} = require("fxjs/Strict");
 
 const getTargetChatRooms = (userNos) =>  goS (
         userNos,
@@ -11,12 +11,13 @@ const getTargetChatRooms = (userNos) =>  goS (
         find(a => every(b => userNos.includes(b.userNo), a.chatMembers))
 );
 
-const joinChatRoom = (userNos) => goS (
-        userNos,
-        getTargetChatRooms,
-        stopIf(a => a),
-        chatRoomStore.saveChatRoom,
-        a => chatMemberStore.saveMembers(userNos, a.chatRoomNo)
+const joinChatRoom = (userNos) => goS(
+    userNos,
+    getTargetChatRooms,
+    stopIf(a => a),
+    chatRoomStore.saveChatRoom,
+    a => chatMemberStore.saveMembers(userNos, a.chatRoomNo),
+    reduce((a, _) => a)
 );
 
 module.exports.joinChatRoom = joinChatRoom;

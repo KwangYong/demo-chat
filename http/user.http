@@ -28,4 +28,9 @@ GET {{apiAddress}}/login-check
 GET {{apiAddress}}/members
 Access-Token: {{accessToken}}
 
+### 채팅방 만들기
+
+POST {{apiAddress}}/chats/13
+Access-Token: {{accessToken}}
+
 ###
