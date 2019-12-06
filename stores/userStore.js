@@ -4,8 +4,8 @@ const models = require('./../models');
 const {go} = require("fxjs/Strict");
 
 const getUserByEmail = (email) => new Promise((resolve, reject) =>
-    models.user.findOne({ where:{email: email}})
-        .then(res => res? resolve(res) : reject(res) ));
+    models.user.findOne({where: {email: email}})
+        .then(value => value ? resolve(value) : reject(value)));
 
 const saveUser = (userInfo) => new Promise((resolve, reject) =>
     models.user.build({

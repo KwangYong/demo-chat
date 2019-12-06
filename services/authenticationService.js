@@ -48,4 +48,3 @@ const verifyJwt = (token) => new Promise(
 module.exports.login = login;
 module.exports.join = join;
 module.exports.verifyJwt = verifyJwt;
-

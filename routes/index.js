@@ -24,7 +24,7 @@ router.post('/join', async (req, res, next) => {
 });
 
 router.get('/login-check', (req, res, next) => {
-  res.status(200);
+  res.status(200).send('ok');
 });
 
 router.get('/members', authenticationMiddleware.jwtMiddleware, async (req, res, next) => {
