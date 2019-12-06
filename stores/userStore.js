@@ -8,7 +8,13 @@ const getUserByEmail = (email) => new Promise((resolve, reject) =>
         .then(res => res? resolve(res) : reject(res) ));
 
 const saveUser = (userInfo) => new Promise((resolve, reject) =>
-    models.user.build({email: userInfo.email, password: userInfo.password}).save().then(res => res ? resolve(res) : reject(res)));
+    models.user.build({
+        email: userInfo.email,
+        password: userInfo.password
+    }).save().then(value => value ? resolve(value) : reject(value)));
+
+const getUsers = () => new Promise(resolve => models.user.findAll().then(value => resolve(value)));
 
 module.exports.getUserByEmail = getUserByEmail;
 module.exports.saveUser = saveUser;
+module.exports.getUsers = getUsers;

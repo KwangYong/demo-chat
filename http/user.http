@@ -23,5 +23,9 @@ Access-Token: {{accessToken}}
 ### token check - error
 GET {{apiAddress}}/login-check
 
-###
+### 친구목록 조회
 
+GET {{apiAddress}}/members
+Access-Token: {{accessToken}}
+
+###
