@@ -1,5 +1,5 @@
 ### 회원가입
-POST http://localhost:3000/join
+POST {{apiAddress}}/join
 Content-Type: application/json
 
 {

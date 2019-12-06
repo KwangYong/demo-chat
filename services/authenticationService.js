@@ -36,6 +36,16 @@ const createJwt = (user) => {
     return Promise.resolve(token);
 };
 
+const verifyJwt = (token) => new Promise(
+    (resolve, reject) => {
+        jwt.verify(token, 'test', (error, decoded) => {
+            if (error) reject(error);
+            resolve(decoded);
+        });
+    }
+);
+
 module.exports.login = login;
 module.exports.join = join;
+module.exports.verifyJwt = verifyJwt;
 
