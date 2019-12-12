@@ -1,14 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const authenticationMiddleware = require('./middleware/authenticationMiddleware');
-
-var indexRouter = require('./routes/index');
-var sequelize = require('./models/index').sequelize;
-
-var app = express();
+const indexRouter = require('./routes/index');
+const sequelize = require('./models/index').sequelize;
+const app = express();
+const ws = require('./routes/websocket');
 
 sequelize.sync();
 
