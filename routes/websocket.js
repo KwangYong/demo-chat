@@ -3,27 +3,35 @@ const wss = new WebSocketServer({ port: 3001 });
 const authenticationService = require('../services/authenticationService');
 const chatRoomService = require('../services/chatRoomService');
 const clients = new Map();
-const {go} = require("fxjs/Strict");
+const {go, tap, map, each} = require("fxjs/Strict");
 
 wss.on("connection", function(ws) {
     ws.on("message", async function(msgString) {
-        try {
             const msg = JSON.parse(msgString);
             if(msg.type === 'TOKEN') {
-                authenticationService.verifyJwt(msg.token)
-                    .then(res => {
-                        clients.set(res.userNo, ws);
-                        ws.user = res;
-                    })
-                    .catch(_ => ws.send(JSON.stringify({type: 'ERROR', msg: 'invalid token'})));
+                try {
+                    go(
+                        msg.token,
+                        authenticationService.verifyJwt,
+                        tap(
+                            a => clients.set(a.userNo, ws),
+                        )
+                    )
+                } catch(e) {
+                    ws.send(JSON.stringify({type: 'ERROR', msg: 'invalid token'}));
+                }
             }  else if(msg.type == 'MESSAGE') {
                 if(ws.user === undefined) {
                    return;
                 }
                 go(
                     [ws.user.userNo, msg.targetUserNo],
+                    tap(
+                        map(p => clients.get(p)),
+                        each(a => a.send(msgString))
+                    ),
                     chatRoomService.joinChatRoom,
-                    map(s =)
+
                 )
 
 
@@ -31,9 +39,7 @@ wss.on("connection", function(ws) {
             } else {
                 throw new Error('unknown type');
             }
-        } catch (e) {
-            ws.send('error type');
-        }
+
         console.log("Received: %s", msgString);
     });
     ws.on('error', (error) => {
