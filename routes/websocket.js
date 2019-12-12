@@ -3,7 +3,7 @@ const wss = new WebSocketServer({ port: 3001 });
 const authenticationService = require('../services/authenticationService');
 const chatRoomService = require('../services/chatRoomService');
 const clients = new Map();
-
+const {go} = require("fxjs/Strict");
 
 wss.on("connection", function(ws) {
     ws.on("message", async function(msgString) {
@@ -20,9 +20,13 @@ wss.on("connection", function(ws) {
                 if(ws.user === undefined) {
                    return;
                 }
-                clients.get(msg.targetUserNo).send(msgString);
-                let room = await chatRoomService.joinChatRoom([ws.user.userNo, msg.targetUserNo]);
-                console.log(room);
+                go(
+                    [ws.user.userNo, msg.targetUserNo],
+                    chatRoomService.joinChatRoom,
+                    map(s =)
+                )
+
+
 
             } else {
                 throw new Error('unknown type');
